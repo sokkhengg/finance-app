@@ -5,7 +5,7 @@ import Label from "@/components/label";
 import PageHeader from "@/components/page-header";
 import Select from "@/components/select";
 import TransactionItem from "@/components/transaction-item";
-import TransactionSummaryItem from "@/components/transaction-summary-items";
+import TransactionSummaryItem from "@/components/transaction-summary-item";
 import Trend from "@/components/trend";
 
 export default function Page() {
