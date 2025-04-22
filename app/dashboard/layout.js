@@ -8,7 +8,7 @@ export default function Layout({children}) {
     <main>
         {children}
     </main>
-    <footer>Footer</footer>
+    <footer className='mt-auto text-center py-8'>Footer</footer>
     </>
     
   )
