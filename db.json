@@ -1,39 +1,71 @@
 {
-    "transactions": [
-      {
-        "id": 1,
-        "amount": 100,
-        "type": "Expense",
-        "description": "Restaurant",
-        "category": "Food",
-        "created_at": "2023-03-15T23:00:00"
-      },
-      {
-        "id": 2,
-        "amount": 159,
-        "type": "Expense",
-        "description": "Gas",
-        "category": "Car",
-        "created_at": "2023-03-15T23:00:00"
-      },
-      {
-        "id": 3,
-        "amount": 500,
-        "type": "Income",
-        "description": "Salary",
-        "category": "",
-        "created_at": "2023-03-15T23:00:00"
-      },
-      {
-        "id": 4,
-        "amount": 99,
-        "type": "Expense",
-        "description": "Rent",
-        "category": "Housing",
-        "created_at": "2024-05-10T23:00:00"
-      }
-    ],
-    "trends": [
+  "transactions": [
+    {
+      "id": 1,
+      "amount": 100,
+      "type": "Expense",
+      "description": "Restaurant",
+      "category": "Food",
+      "created_at": "2023-03-15T23:00:00"
+    },
+    {
+      "id": 2,
+      "amount": 159,
+      "type": "Expense",
+      "description": "Gas",
+      "category": "Car",
+      "created_at": "2023-03-15T23:00:00"
+    },
+    {
+      "id": 3,
+      "amount": 500,
+      "type": "Income",
+      "description": "Salary",
+      "category": "",
+      "created_at": "2023-03-15T23:00:00"
+    },
+    {
+      "id": 4,
+      "amount": 99,
+      "type": "Expense",
+      "description": "Rent",
+      "category": "Housing",
+      "created_at": "2024-05-10T23:00:00"
+    },
+    {
+      "type": "Expense",
+      "category": "Food",
+      "amount": 90,
+      "description": "cheese",
+      "created_at": "2025-04-23T00:00:00",
+      "id": 5
+    },
+    {
+      "type": "Expense",
+      "category": "Food",
+      "amount": 90,
+      "description": "cheese",
+      "created_at": "2025-04-23T00:00:00",
+      "id": 6
+    },
+    {
+      "type": "Expense",
+      "category": "Food",
+      "amount": 90,
+      "description": "cheese",
+      "created_at": "2025-04-23T00:00:00",
+      "id": 7
+    },
+    {
+      "type": "Income",
+      "category": "Education",
+      "amount": 90,
+      "description": "Learning",
+      "created_at": "2025-04-23T00:00:00",
+      "id": 8
+    }
+  ],
+  "trends": [
     {
       "id": "Income",
       "amount": 4000,
@@ -54,5 +86,5 @@
       "amount": 4000,
       "prevAmount": 3000
     }
-    ]
-  }
+  ]
+}
