@@ -9,13 +9,14 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { transactionSchema } from "@/lib/validation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { purgeTransactionListCache } from "@/lib/actions";
-import FormError from "./form-error";
+import { createTransaction } from "@/lib/actions";
+import FormError from "@/components/form-error";
 
 export default function TransactionForm() {
     const {
         register,
         handleSubmit,
+        setValue,
         watch,
         formState: { errors },
     } = useForm({
@@ -24,23 +25,24 @@ export default function TransactionForm() {
     })
     const router = useRouter()
     const [isSaving, setSaving] = useState(false)
+    const [lastError, setLastError] = useState()
+    const type = watch("type")
 
     const onSubmit = async (data) => {
+        console.log(data);
+        
         setSaving(true)
+        setLastError()
         try{
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({...data,
-                    created_at: `${data.created_at}T00:00:00`
-                })
-            })
-            await purgeTransactionListCache()
+            
+            await createTransaction(data)
             router.push('/dashboard')
 
-        } finally {
+        } 
+        catch (error) {
+            setLastError(error)
+        }
+        finally {
             setSaving(false)
         }
 
@@ -51,7 +53,15 @@ export default function TransactionForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <Label className="mb-1">Type</Label>
-                <Select {...register("type")}>
+                <Select {...register("type", 
+                    {
+                        onChange: (e) => {
+                            if (e.target.value !== "Expense") {
+                                setValue("category", "")
+                            }
+                        }
+                    })
+                }>
                     {types.map(type => <option key={type}>{type}</option>)}
                 </Select>
                 <FormError error={errors.type}/>
@@ -59,7 +69,8 @@ export default function TransactionForm() {
             </div>
             <div>
                 <Label className="mb-1">Category</Label>
-                <Select {...register("category")}>
+                <Select {...register("category")} disabled={type !== "Expense"}>
+                    <option value="">Select a category</option>
                     {categories.map(categorie => <option key={categorie}>{categorie}</option>)}
                 </Select>
                 <FormError error={errors.category}/>
@@ -83,8 +94,11 @@ export default function TransactionForm() {
                 <FormError error={errors.description}/>
 
             </div>
-            <div>
-                <Button type="submit" className="flex justify-end" disabled={isSaving}>Save</Button>
+            <div className="flex justify-between items-center">
+                <div>
+                    {lastError && <FormError error={lastError} />}
+                </div>
+                <Button type="submit"  disabled={isSaving}>Save</Button>
             </div>
         </div>
     </form>
