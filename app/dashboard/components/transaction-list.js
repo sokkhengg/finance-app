@@ -1,26 +1,35 @@
+'use client'
+import Button from "@/components/button"
 import Seperator from "@/components/seperator"
 import TransactionItem from "@/components/transaction-item"
 import TransactionSummaryItem from "@/components/transaction-summary-item"
-import { createClient } from "@/lib/supabase/server"
+import { fetchTransactions } from "@/lib/actions"
+import { groupAndSumTransactionsByDate } from "@/lib/utils"
+import { Loader } from "lucide-react"
+import { useState } from "react"
 
-const groupAndSumTransactionsByDate = (transactions) => {
-  const grouped = {}
-  for (const transaction of transactions) {
-    const date = transaction.created_at.split('T')[0]
-    if(!grouped[date]) {
-      grouped[date] = {transactions: [], amount: 0}
-    }
-    grouped[date].transactions.push(transaction)
-    const amount = transaction.type === 'Expense' ? -transaction.amount : transaction.amount
-    grouped[date].amount += amount
-  }
-  return grouped
-}
-
-export default async function TransactionList() {
-  const supabase = createClient()
-  const { data: transactions, error } = await supabase.from('transactions').select('*').order('created_at', {ascending: false})
+export default function TransactionList({range, initialTransactions}) {
+  const [loading, setLoading] = useState(false)
+  const [buttonHidden, setButtonHidden] = useState(initialTransactions.length === 0)
+  const [transactions, setTransactions] = useState(initialTransactions)
+  const [offset, setOffset] = useState(initialTransactions.length)
   const grouped = groupAndSumTransactionsByDate(transactions)
+
+  const handleClick = async (e) => {
+    setLoading(true)
+    try {
+      const nextTransactions = await fetchTransactions(range, offset, 10)
+      setButtonHidden(nextTransactions.length === 0)
+      setOffset(preValue => preValue + 10)
+      setTransactions(prevTransactions => [
+      ...prevTransactions,
+      ...nextTransactions
+    ])
+    } finally {
+      setLoading(false)
+    }
+    
+  }
   
   return (
     <div className="space-y-8">
@@ -36,6 +45,19 @@ export default async function TransactionList() {
             </section>
           </div>
         )}
+        {transactions.length === 0 && <div>No transaction found</div>}{!buttonHidden && <div className="flex justify-center">
+          <Button variant="ghost" onClick={handleClick} disabled={loading}>
+            <div className="flex items-center space-x-1">
+              {loading && <Loader className="animate-spin"/>}
+              <div>
+              Load More
+              </div>
+            </div>
+            
+          </Button>
+        </div>
+        }
+        
     </div>
   )
 }
