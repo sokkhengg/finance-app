@@ -9,10 +9,12 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { transactionSchema } from "@/lib/validation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createTransaction } from "@/lib/actions";
+import { createTransaction, updateTransaction } from "@/lib/actions";
 import FormError from "@/components/form-error";
 
-export default function TransactionForm() {
+
+
+export default function TransactionForm({initialData}) {
     const {
         register,
         handleSubmit,
@@ -21,17 +23,27 @@ export default function TransactionForm() {
         formState: { errors },
     } = useForm({
         mode: "onTouched",
-        resolver: zodResolver(transactionSchema)
+        resolver: zodResolver(transactionSchema),
+        defaultValues: initialData ?? {
+            created_at: new Date().toISOString().split('T')[0]
+        }
     })
     const router = useRouter()
     const [isSaving, setSaving] = useState(false)
     const [lastError, setLastError] = useState()
     const type = watch("type")
+    const editing = Boolean(initialData)
 
     const onSubmit = async (data) => {
         setSaving(true)
         setLastError()
         try{
+            if (editing) {
+                await updateTransaction(
+                    initialData.id,
+                    data
+                )
+            }
             
             await createTransaction(data)
             router.push('/dashboard')
@@ -76,7 +88,7 @@ export default function TransactionForm() {
             </div>
             <div>
                 <Label className="mb-1">Date</Label>
-                <Input {...register("created_at")} />
+                <Input {...register("created_at")} disabled={editing} />
                 <FormError error={errors.created_at}/>
 
                 
