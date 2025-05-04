@@ -7,3 +7,4 @@ export default function Alert({title, icon, children}) {
       </div>
     </div>
   }
+
