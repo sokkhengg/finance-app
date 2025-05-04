@@ -1,31 +1,36 @@
-import Link from 'next/link'
-import DarkModeToggle from './dark-mode-toggle'
-import useServerDarkMode from '@/hooks/use-server-dark-mode'
 import { createClient } from '@/lib/supabase/server'
-import { KeyRound } from 'lucide-react'
-import { sizes, variants } from '@/lib/variants'
-import SignOutButton from './sign-out-button'
+import { getThemeFromCookies } from '@/lib/theme'
 import Avatar from './avatar'
+import AvatarClient from './avatar-client'
+import PageHeaderClient from './page-header-client'
 
+// Server component that handles data fetching
 export default async function PageHeader({ className }) {
-  const theme = useServerDarkMode()
   const supabase = createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
+  const initialTheme = getThemeFromCookies('dark')
+  
+  // Get avatar data for the user
+  let avatarUrl = null
+  if (user?.user_metadata?.avatar) {
+    const { data: imageData, error: avatarError } = await supabase.storage
+      .from('avatars')
+      .createSignedUrl(user.user_metadata.avatar, 60 * 5)
+      
+    if (!avatarError) {
+      avatarUrl = imageData.signedUrl
+    }
+  }
+  
+  // Render the AvatarClient directly here to pass to PageHeaderClient
+  const avatarComponent = <AvatarClient imageUrl={avatarUrl} />
+  
   return (
-    <header className={`flex justify-between items-center ${className}`}>
-      <Link href="/dashboard" className="text-xl hover:underline underline-offset-8 decoration-2">Finance App</Link>
-
-      <div className="flex items-center">
-        <DarkModeToggle defaultMode={theme} />
-        {user && <Link href="/dashboard/settings" className={`flex items-center space-x-1 ${variants['ghost']} ${sizes['sm']}`}>
-          <Avatar />
-          <span>{user?.user_metadata?.fullName ?? user?.email}</span>
-        </Link>}
-        {user && <SignOutButton />}
-        {!user && <Link href="/login" className={`${variants['ghost']} ${sizes['sm']}`}>
-          <KeyRound className="w-6 h-6" />
-        </Link>}
-      </div>
-    </header>
+    <PageHeaderClient 
+      className={className} 
+      user={user} 
+      initialTheme={initialTheme}
+      avatarComponent={avatarComponent}
+    />
   )
 }
