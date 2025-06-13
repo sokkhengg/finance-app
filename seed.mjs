@@ -42,7 +42,7 @@ async function seed() {
 
   const userIds = users?.map(user => user.id)
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 30; i++) {
     const created_at = faker.date.past()
     let type, category = null
     const user_id = faker.helpers.arrayElement(userIds)
