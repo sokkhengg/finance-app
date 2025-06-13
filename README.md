@@ -5,6 +5,10 @@ A personal finance tracker app built as part of my learning journey with **Next.
 This project helped me understand full-stack development concepts including authentication, API integration, dynamic routing, responsive UI design, and state management.
 
 ---
+## 🌐 Live Demo
+
+Visit the deployed site here:  
+👉 [https://finance-app-beta-ten.vercel.app/](https://finance-app-beta-ten.vercel.app/)
 
 ## 🧠 What I Learned
 
