@@ -1,8 +1,8 @@
 # 💰 FinanceApp
 
 A personal finance tracker app built as part of my learning journey with **Next.js**, **Supabase**, **Tailwind CSS**, and other modern web technologies.
-
 This project helped me understand full-stack development concepts including authentication, API integration, dynamic routing, responsive UI design, and state management.
+
 ---
 
 ## ✨ Motivation
@@ -14,6 +14,7 @@ I chose a finance tracker because:
 - It requires handling complex data (transactions, categories, analytics)
 - It covers key full-stack topics like authentication, database integration, UI state management, and responsive design
 Through this project, I learned how to bring a full product from idea to production — not just following a tutorial, but making design decisions, solving bugs, and deploying a working app.
+
 ---
 
 ## 🌐 Live Demo
