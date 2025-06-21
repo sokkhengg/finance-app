@@ -13,7 +13,6 @@ I chose a finance tracker because:
 - It’s a practical tool that solves a real-world problem
 - It requires handling complex data (transactions, categories, analytics)
 - It covers key full-stack topics like authentication, database integration, UI state management, and responsive design
-
 Through this project, I learned how to bring a full product from idea to production — not just following a tutorial, but making design decisions, solving bugs, and deploying a working app.
 ---
 
