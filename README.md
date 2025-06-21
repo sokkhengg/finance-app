@@ -3,8 +3,20 @@
 A personal finance tracker app built as part of my learning journey with **Next.js**, **Supabase**, **Tailwind CSS**, and other modern web technologies.
 
 This project helped me understand full-stack development concepts including authentication, API integration, dynamic routing, responsive UI design, and state management.
-
 ---
+
+## ✨ Motivation
+
+This project began as part of my personal learning journey to improve my full-stack web development skills. I wanted to build a useful app from scratch — something I could use myself — while learning modern tools like **Next.js 14**, **Supabase**, **Tailwind CSS**, and advanced React patterns.
+
+I chose a finance tracker because:
+- It’s a practical tool that solves a real-world problem
+- It requires handling complex data (transactions, categories, analytics)
+- It covers key full-stack topics like authentication, database integration, UI state management, and responsive design
+
+Through this project, I learned how to bring a full product from idea to production — not just following a tutorial, but making design decisions, solving bugs, and deploying a working app.
+---
+
 ## 🌐 Live Demo
 
 Visit the deployed site here:  
